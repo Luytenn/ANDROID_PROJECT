@@ -202,6 +202,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public List<ModeloVehiculo> getModelos(){
+
+        List<ModeloVehiculo> modeloList = new ArrayList<>();
+
+        //get data from the database
+
+        String queryString = "SELECT  * FROM " + TABLA_MODELO;
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                int idModelo = cursor.getInt(0);
+                String descripcion = cursor.getString(1);
+                int id_Marca = cursor.getInt(2);
+
+                ModeloVehiculo modelo = new ModeloVehiculo(idModelo, descripcion,id_Marca);
+                modeloList.add(modelo);
+
+            } while (cursor.moveToNext());
+        }
+        else{
+
+        }
+        cursor.close();
+        db.close();
+        return modeloList;
+
+    }
+
     public List<ModeloVehiculo> getModeloVehiculo(int idMarca){
 
 
@@ -265,6 +298,37 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return tipoList;
+
+    }
+
+    public List<Marca> getMarcaNoDesc(){
+
+        List<Marca> marcaList = new ArrayList<>();
+
+        //get data from the database
+
+        String queryString = "SELECT  * FROM " + TABLA_MARCA;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                int idMarca = cursor.getInt(0);
+                String descripcion = cursor.getString(1);
+
+                Marca m = new Marca(idMarca, descripcion);
+                marcaList.add(m);
+
+            } while (cursor.moveToNext());
+        }
+        else{
+
+        }
+        cursor.close();
+        db.close();
+        return marcaList;
 
     }
 

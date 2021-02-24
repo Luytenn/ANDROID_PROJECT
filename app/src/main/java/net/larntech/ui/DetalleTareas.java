@@ -128,7 +128,6 @@ public class DetalleTareas extends AppCompatActivity {
                     if(response.isSuccessful()){
 
                         TareaCompleta tarea  = response.body();
-                        String nombreVehiculo = tarea.getNom_vehiculo();
                         String numCredito = tarea.getNum_credito();
                         String imei = tarea.getGps().getImeiGps();
                         String modeloGps = tarea.getModelo();
@@ -144,7 +143,7 @@ public class DetalleTareas extends AppCompatActivity {
                         int idTipo = tarea.getId_tipo();
                         int idGps = tarea.getGps().getIdGps();
 
-                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_NOM_VEH, nombreVehiculo);
+                     
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_NUM_CRE, numCredito);
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_IMEI_GPS, imei);
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_MODEL_GPS, modeloGps);
@@ -160,7 +159,7 @@ public class DetalleTareas extends AppCompatActivity {
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_TIPO, String.valueOf(idTipo));
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_FLOTA,String.valueOf(idFlota));
 
-                        System.out.println("Nombre Vehiculo : " + nombreVehiculo);
+
                         System.out.println("Ultima direccion : " +  ultDireccion);
                         System.out.println("BLOQUEO :" + flagBloqueo);
                         System.out.println("ID GPS :" + flagBloqueo);
@@ -252,7 +251,6 @@ public class DetalleTareas extends AppCompatActivity {
         placaText  = findViewById(R.id.clienteView);
         vinText  = findViewById(R.id.modelogpsView);
         colorText  = findViewById(R.id.imeiView);
-        tipoSoltText = findViewById(R.id.tipoSolicitud);
         conceText = findViewById(R.id.concecionario);
         direcText = findViewById(R.id.direccion);
 
@@ -268,7 +266,6 @@ public class DetalleTareas extends AppCompatActivity {
             String vin = userResponse.getNumero_vin();
             String color = userResponse.getColor();
             String cliente = userResponse.getCliente();
-            String tipoSol = userResponse.getTipoSolicitud();
             String concecionario = userResponse.getConcecionario();
             String direccion = userResponse.getDireccion();
             estado = userResponse.getEstado();
@@ -283,11 +280,12 @@ public class DetalleTareas extends AppCompatActivity {
             vinText.setText(vin);
             colorText.setText(color);
             clienteText.setText(cliente);
-            tipoSoltText.setText(tipoSol);
+
             conceText.setText(concecionario);
             direcText.setText(direccion);
 
             SharedPreferencesManager.setSomeStringValue(Constantes.PREF_CLIENTE,cliente);
+            SharedPreferencesManager.setSomeStringValue(Constantes.PREF_PLACA,placa);
 
 
         }

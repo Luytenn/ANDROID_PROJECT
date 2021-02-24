@@ -29,9 +29,6 @@ public class TecnicoTareas implements Serializable {
     @SerializedName("direccion")
     @Expose
     private String direccion;
-    @SerializedName("tipo_solicitud")
-    @Expose
-    private String tipo_solicitud;
     @SerializedName("celular")
     @Expose
     private String celular;
@@ -54,12 +51,11 @@ public class TecnicoTareas implements Serializable {
      * @param numero_vin
      * @param color
      * @param concecionario
-     * @param tipoSolicitud
      * @param direccion
      * @param id
      * @param placa
      */
-    public TecnicoTareas(Integer id, String placa, String cliente, String numero_vin, String color, String concecionario, String direccion, String tipo_solicitud, String celular, boolean estado) {
+    public TecnicoTareas(Integer id, String placa, String cliente, String numero_vin, String color, String concecionario, String direccion, String celular, boolean estado) {
         super();
         this.id = id;
         this.placa = placa;
@@ -68,7 +64,6 @@ public class TecnicoTareas implements Serializable {
         this.color = color;
         this.concecionario = concecionario;
         this.direccion = direccion;
-        this.tipo_solicitud = tipo_solicitud;
         this.celular = celular;
         this.estado = estado;
     }
@@ -145,12 +140,6 @@ public class TecnicoTareas implements Serializable {
         this.direccion = direccion;
     }
 
-    public String getTipoSolicitud() {
-        return tipo_solicitud;
-    }
 
-    public void setTipoSolicitud(String tipoSolicitud) {
-        this.tipo_solicitud = tipo_solicitud;
-    }
 
 }

@@ -53,6 +53,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+
         insertarTipoVehiculoLocal();
         insertarMarcaLocal();
         insertarModeloLocal();
@@ -117,11 +118,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         if(marca!=false && tipo!=false && modelo!=false) {
 
-            String email = etUsuario.getText().toString();
+            String usuario = etUsuario.getText().toString();
             String password = etPassword.getText().toString();
             String grant_type = "password";
 
-            if (email.isEmpty()) {
+            if (usuario.isEmpty()) {
                 etUsuario.setError("El usuario es requerido");
 
             } else if (password.isEmpty()) {
@@ -133,7 +134,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 int color = Color.parseColor("#5356fe");
                 btnLogin.getBackground().mutate().setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC));
 
-                Call<ResponseAuth> call = loginService.doLogin(email, password, grant_type);
+                Call<ResponseAuth> call = loginService.doLogin(usuario, password, grant_type);
 
 
                 call.enqueue(new Callback<ResponseAuth>() {
@@ -142,7 +143,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         if (response.isSuccessful()) {
 
                             SharedPreferencesManager.setSomeStringValue(Constantes.PREF_TOKEN, response.body().getAccess_token());
-                            SharedPreferencesManager.setSomeStringValue(Constantes.PREF_USERNAME, email);
+                            SharedPreferencesManager.setSomeStringValue(Constantes.PREF_USERNAME, usuario);
 
                             System.out.println(response.body().getAccess_token());
 
@@ -218,12 +219,38 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         }
 
-                        Toast.makeText(Login.this, "Success " + success, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Login.this, "Success " + success, Toast.LENGTH_SHORT).show();
 
-                    }
+                    } /*else{
+
+                        int lastRow = 0;
+
+                        Marca m2 = new Marca();
+                        List<Marca> list = new ArrayList<>();
+                        list = dataBaseHelper.getMarcaNoDesc();
+
+                        lastRow = list.get(list.size()-1).getIdMarca();
+                        boolean success2 = false;
+                        for(int i=0; i<listaMarca.size(); i++){
+
+
+                            if(lastRow<=listaMarca.get(i).getIdMarca()){
+
+                                m2.setIdMarca(listaMarca.get(i).getIdMarca());
+                                m2.setDesMarca(listaMarca.get(i).getDesMarca());
+
+                                success2 = dataBaseHelper.addMarca(m2);
+
+                            }
 
 
 
+
+                        }
+
+
+
+                    }*/
 
                 }else{
                     Toast.makeText(Login.this, "Vuelva a Ingresar Nuevamente", Toast.LENGTH_SHORT).show();
@@ -268,10 +295,40 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             success = dataBaseHelper.addModelo(modelo);
                         }
 
-                        Toast.makeText(Login.this, "SUCCESS : " + success, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Login.this, "SUCCESS : " + success, Toast.LENGTH_SHORT).show();
 
 
-                    }
+                    } /*else{
+
+                        int lastRow = 0;
+
+                        ModeloVehiculo modeloV = new ModeloVehiculo();
+                        List<ModeloVehiculo> list = new ArrayList<>();
+                        list = dataBaseHelper.getModelos();
+
+                        lastRow = list.get(list.size()-1).getIdModelo();
+                        boolean success2 = false;
+                        for(int i=0; i<listaModelo.size(); i++){
+
+
+                            if(lastRow<=listaModelo.get(i).getIdModelo()){
+
+                                modeloV.setIdModelo(listaModelo.get(i).getIdModelo());
+                                modeloV.setId_marca(listaModelo.get(i).getId_marca());
+                                modeloV.setDesModelo(listaModelo.get(i).getDesModelo());
+
+                                success2 = dataBaseHelper.addModelo(modeloV);
+
+                            }
+
+
+
+
+                        }
+
+
+
+                    }*/
 
 
                    }else{
@@ -319,7 +376,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                         }
 
-                        Toast.makeText(Login.this, "Success " + success, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Login.this, "Success " + success, Toast.LENGTH_SHORT).show();
 
                     }
 

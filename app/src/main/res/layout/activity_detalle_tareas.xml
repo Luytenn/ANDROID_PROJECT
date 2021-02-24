@@ -32,17 +32,17 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:backgroundTint="#D3D7DC"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="    Concecionario"
-        android:textSize="14sp"
         android:clickable="false"
-        android:longClickable="false"
+        android:ems="10"
         android:focusable="false"
+        android:inputType="textPersonName"
+        android:longClickable="false"
+        android:text="    Concecionario"
         android:textColor="@color/colorPrimaryText"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBloquear" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextOnline" />
 
     <EditText
         android:id="@+id/editTextIMEIOperar"
@@ -95,24 +95,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextUltimaTrans" />
-
-    <EditText
-        android:id="@+id/editTextBloquear"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:backgroundTint="#D3D7DC"
-        android:ems="10"
-        android:gravity="left|center_vertical"
-        android:inputType="textPersonName"
-        android:text="    Tipo de Solicitud"
-        android:textSize="14sp"
-        android:clickable="false"
-        android:longClickable="false"
-        android:focusable="false"
-        android:textColor="@color/colorPrimaryText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOnline" />
 
     <EditText
         android:id="@+id/editTextModelo"
@@ -188,16 +170,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imeiView" />
 
     <TextView
-        android:id="@+id/tipoSolicitud"
-        android:layout_width="233dp"
-        android:layout_height="55dp"
-        android:gravity="center|left"
-        android:text="tipoSolicitud"
-        android:textColor="@color/colorSecondaryText"
-        app:layout_constraintEnd_toEndOf="@+id/editTextBloquear"
-        app:layout_constraintTop_toBottomOf="@+id/cliente" />
-
-    <TextView
         android:id="@+id/concecionario"
         android:layout_width="234dp"
         android:layout_height="55dp"
@@ -205,7 +177,7 @@
         android:text="Concecionario"
         android:textColor="@color/colorSecondaryText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tipoSolicitud" />
+        app:layout_constraintTop_toBottomOf="@+id/cliente" />
 
     <TextView
         android:id="@+id/direccion"

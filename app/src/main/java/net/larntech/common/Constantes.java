@@ -1,8 +1,8 @@
 package net.larntech.common;
 
 public class Constantes {
-    public static final String API_MINITWITTER_BASE_URL = "https://f55806826752.ngrok.io/";
-
+    public static final String API_MINITWITTER_BASE_URL = "http://200.41.86.242:8061/";
+//
     // Preferences
     public static final String PREF_TOKEN = "PREF_TOKEN";
     public static final String PREF_USERNAME = "PREF_USERNAME";
@@ -17,7 +17,8 @@ public class Constantes {
 
     //EditarTareas
 
-    public static final String PREF_NOM_VEH = "PREF_NOM_VEH";
+
+    public static final String PREF_PLACA = "PREF_PLACA";
     public static final String PREF_NUM_CRE = "PREF_NUM_CRE";
     public static final String PREF_NUM_SUTRAN = "PREF_NUM_SUTRAN";
     public static final String PREF_FLAG_BLOQUEO = "PREF_FLAG_BLOQUEO";

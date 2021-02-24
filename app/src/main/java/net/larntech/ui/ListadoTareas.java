@@ -148,7 +148,7 @@ public class ListadoTareas extends AppCompatActivity implements TareasAdapter.Cl
             @Override
             public void onFailure(Call<List<TecnicoTareas>> call, Throwable t) {
                 Log.e("failure", t.getLocalizedMessage());
-                Toast.makeText(ListadoTareas.this, "No se ha podido listar las tareas, intentelo de nuevo", Toast.LENGTH_LONG).show();
+                Toast.makeText(ListadoTareas.this, "No se ha podido listar las tareas, revise su conexion de internet", Toast.LENGTH_LONG).show();
                 loadingDialog.dismissDialog();
                 Intent i = new Intent(ListadoTareas.this, Login.class);
                 startActivity(i);
