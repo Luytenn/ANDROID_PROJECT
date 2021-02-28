@@ -85,27 +85,12 @@
             android:contentDescription="TODO" />
 
         <ImageView
-            android:id="@+id/imageMore2"
-            android:layout_width="wrap_content"
-            android:layout_height="111dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="338dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="TODO"
-            app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
-
-        <ImageView
             android:id="@+id/imageView2"
             android:layout_width="78dp"
             android:layout_height="80dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="14dp"
-            app:srcCompat="@drawable/auto"
+            app:srcCompat="@drawable/ic_sportscar"
             tools:srcCompat="@drawable/auto" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

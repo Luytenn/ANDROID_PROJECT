@@ -138,8 +138,8 @@ public class DetalleTareas extends AppCompatActivity {
                         int flagBloqueo = tarea.getFlag_bloqueo();
                         String idChip = tarea.getChip().getId_chip();
                         int idFlota = tarea.getId_flota();
-                        int idMarca = tarea.getId_marca();
-                        int idModelo = tarea.getId_modelo();
+                        String marca = tarea.getDes_marca();
+                        String modelo  = tarea.getModelo();
                         int idTipo = tarea.getId_tipo();
                         int idGps = tarea.getGps().getIdGps();
 
@@ -154,8 +154,8 @@ public class DetalleTareas extends AppCompatActivity {
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_FLAG_BLOQUEO, String.valueOf(flagBloqueo));
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_GPS, String.valueOf(idGps));
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_CHIP, idChip);
-                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_MARCA, String.valueOf(idMarca));
-                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_MODELO, String.valueOf(idModelo)) ;
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_DES_MARCA, marca);
+                        SharedPreferencesManager.setSomeStringValue(Constantes.PREF_DES_MODELO, modelo) ;
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_TIPO, String.valueOf(idTipo));
                         SharedPreferencesManager.setSomeStringValue(Constantes.PREF_ID_FLOTA,String.valueOf(idFlota));
 
@@ -165,7 +165,8 @@ public class DetalleTareas extends AppCompatActivity {
                         System.out.println("ID GPS :" + flagBloqueo);
                         System.out.println("ID CHIP:" + idChip );
                         System.out.println("SUGRAN : " + sutran);
-                        System.out.println("ID MARCA: " + idMarca);
+                        System.out.println("MARCA: " + marca);
+                        System.out.println("MODELO: " + modelo);
                         System.out.println("ID TIPO: " + idTipo);
                         System.out.println("ID FLOTA : " + idFlota);
 

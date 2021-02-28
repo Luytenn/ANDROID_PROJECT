@@ -17,12 +17,12 @@ public class TareaCompleta {
     @SerializedName("id_flota")
     @Expose
     private Integer id_flota;
-    @SerializedName("id_marca")
+    @SerializedName("des_marca")
     @Expose
-    private Integer id_marca;
-    @SerializedName("id_modelo")
+    private String des_marca;
+    @SerializedName("des_modelo")
     @Expose
-    private Integer id_modelo;
+    private String des_modelo;
     @SerializedName("id_tipo")
     @Expose
     private Integer id_tipo;
@@ -45,14 +45,14 @@ public class TareaCompleta {
     @Expose
     private String ultima_transmision;
 
-    public TareaCompleta(GPSVehiculo gps, String modelo, GPSVehiculo chip, Integer id_flota, Integer id_marca, Integer id_modelo, Integer id_tipo, String nom_vehiculo, String num_credito, String flag_sutran, String ultima_direccion, Integer flag_bloqueo, String ultima_transmision) {
+    public TareaCompleta(GPSVehiculo gps, String modelo, GPSVehiculo chip, Integer id_flota, String des_marca, String des_modelo, Integer id_tipo, String nom_vehiculo, String num_credito, String flag_sutran, String ultima_direccion, Integer flag_bloqueo, String ultima_transmision) {
         super();
         this.gps = gps;
         this.modelo = modelo;
         this.chip = chip;
         this.id_flota = id_flota;
-        this.id_marca = id_marca;
-        this.id_modelo = id_modelo;
+        this.des_marca = des_marca;
+        this.des_modelo = des_modelo;
         this.id_tipo = id_tipo;
         this.nom_vehiculo = nom_vehiculo;
         this.num_credito = num_credito;
@@ -94,20 +94,20 @@ public class TareaCompleta {
         this.id_flota = id_flota;
     }
 
-    public Integer getId_marca() {
-        return id_marca;
+    public String getDes_marca() {
+        return des_marca;
     }
 
-    public void setId_marca(Integer id_marca) {
-        this.id_marca = id_marca;
+    public void setDes_marca(String des_marca) {
+        this.des_marca = des_marca;
     }
 
-    public Integer getId_modelo() {
-        return id_modelo;
+    public String getDes_modelo() {
+        return des_modelo;
     }
 
-    public void setId_modelo(Integer id_modelo) {
-        this.id_modelo = id_modelo;
+    public void setDes_modelo(String des_modelo) {
+        this.des_modelo = des_modelo;
     }
 
     public Integer getId_tipo() {

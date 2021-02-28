@@ -94,7 +94,7 @@ public class ListadoTareas extends AppCompatActivity implements TareasAdapter.Cl
 
     private void events(){
 
-        username =  (TextView)findViewById(R.id.usuarioView);
+        username =  findViewById(R.id.usuarioView);
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recyclerview);
         buttonSalir = findViewById(R.id.btnSalir);

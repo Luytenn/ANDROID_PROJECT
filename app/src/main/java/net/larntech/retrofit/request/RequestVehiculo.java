@@ -8,12 +8,12 @@ import retrofit2.Call;
 
 public class RequestVehiculo {
 
-    @SerializedName("id_modelo")
+    @SerializedName("modelo")
     @Expose
-    private Integer idModelo;
-    @SerializedName("id_marca")
+    private Integer modelo;
+    @SerializedName("marca")
     @Expose
-    private Integer idMarca;
+    private Integer marca;
     @SerializedName("id_chip")
     @Expose
     private Integer idChip;
@@ -51,21 +51,11 @@ public class RequestVehiculo {
     public RequestVehiculo() {
     }
 
-    /**
-     * 
-     * @param flagSutran
-     * @param idChip
-     * @param idGps
-     * @param nomVehiculo
-     * @param idTipo
-     * @param idModelo
-     * @param idMarca
-     * @param numCredito
-     */
-    public RequestVehiculo(Integer idModelo, Integer idMarca, Integer idChip, Integer idGps, Integer idTipo, String nomVehiculo, String numCredito, String flagSutran, Integer id_flota,Integer estado, String mensaje) {
+
+    public RequestVehiculo(Integer modelo, Integer marca, Integer idChip, Integer idGps, Integer idTipo, String nomVehiculo, String numCredito, String flagSutran, Integer id_flota,Integer estado, String mensaje) {
         super();
-        this.idModelo = idModelo;
-        this.idMarca = idMarca;
+        this.modelo = modelo;
+        this.marca = marca;
         this.idChip = idChip;
         this.idGps = idGps;
         this.idTipo = idTipo;
@@ -101,20 +91,20 @@ public class RequestVehiculo {
         this.id_flota = id_flota;
     }
 
-    public Integer getIdModelo() {
-        return idModelo;
+    public Integer getModelo() {
+        return modelo;
     }
 
-    public void setIdModelo(Integer idModelo) {
-        this.idModelo = idModelo;
+    public void setModelo(Integer modelo) {
+        this.modelo = modelo;
     }
 
-    public Integer getIdMarca() {
-        return idMarca;
+    public Integer getMarca() {
+        return marca;
     }
 
-    public void setIdMarca(Integer idMarca) {
-        this.idMarca = idMarca;
+    public void setMarca(Integer marca) {
+        this.marca = marca;
     }
 
     public Integer getIdChip() {

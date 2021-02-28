@@ -13,7 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.RegistroOperacion"></activity>
+        <activity android:name=".ui.RegistroOperacion">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.RegistroVehiculo"></activity>
         <activity
             android:name=".ui.IngresoIMEI"
@@ -23,11 +29,7 @@
         <activity android:name=".ui.DetalleTareas" />
         <activity android:name=".ui.ListadoTareas" />
         <activity android:name=".ui.Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

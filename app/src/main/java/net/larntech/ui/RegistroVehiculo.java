@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -33,16 +32,12 @@ import net.larntech.common.DataBaseHelper;
 import net.larntech.common.LoadingDialog;
 import net.larntech.common.SharedPreferencesManager;
 import net.larntech.retrofit.client.AuthChipClient;
-import net.larntech.retrofit.client.MarcaClient;
-import net.larntech.retrofit.client.ModeloClient;
 import net.larntech.retrofit.client.PlanClient;
 import net.larntech.retrofit.client.TipoVehiculoClient;
 import net.larntech.retrofit.client.VehiculoClient;
 import net.larntech.retrofit.request.RequestVehiculo;
 import net.larntech.retrofit.response.Flota;
 import net.larntech.retrofit.response.GPSVehiculo;
-import net.larntech.retrofit.response.Marca;
-import net.larntech.retrofit.response.ModeloVehiculo;
 import net.larntech.retrofit.response.TipoVehiculo;
 import net.larntech.retrofit.response.Ubicacion;
 
@@ -66,6 +61,8 @@ public class RegistroVehiculo extends AppCompatActivity {
     Button btnSiguiente;
     Spinner spinnerCommand;
     String imeiGps;
+    TextView modeloText;
+    TextView marcaText;
     TextView modeloGps;
     TextView placaText;
     TextView estadoText;
@@ -80,37 +77,28 @@ public class RegistroVehiculo extends AppCompatActivity {
     AutoCompleteTextView imeiText;
     Spinner spinnerTipoVeh;
     Spinner spinnerFlota;
-    Spinner spinnerModelo;
     List<GPSVehiculo> chipPossible = new ArrayList<>();
     List<GPSVehiculo> listaTelefono = new ArrayList<>();
-    List<String> listaMarca = new ArrayList<>();
-    List<String> listaModelo = new ArrayList<>();
     List<RequestVehiculo> listaVehiculo = new ArrayList<>();
     List<String> listaTipo = new ArrayList<>();
     Ubicacion ubicacion = new Ubicacion();
     RequestVehiculo comando = new RequestVehiculo();
-    HashMap<Integer,String> mapMarca = new HashMap<>();
     HashMap<Integer,String> mapTipo = new HashMap<>();
-    HashMap<Integer,String> mapModelo = new HashMap<>();
     HashMap<Integer,String> mapMarcaPosition = new HashMap<>();
     String telefono;
-    String marca="";
-    String modelo;
     String flota;
     String mensaje;
+    String desMarca;
+    String desModelo;
     int estado;
-    int idMarca;
     int idTipo;
     int idChip;
-    int idModelo;
     int idTarea;
     int idFlota;
     int vehiculoId;
     int idGps;
-    int position;
     int positionTipo;
     int positionFlota;
-    int positionModelo;
     Integer idVehiculo;
     String tipoVehiculo;
     String placaVehiculo;
@@ -140,6 +128,8 @@ public class RegistroVehiculo extends AppCompatActivity {
 
         llenarCasillas();
 
+        getPlan()
+
         comboBoxFlota();
 
         comboBoxComando();
@@ -147,10 +137,6 @@ public class RegistroVehiculo extends AppCompatActivity {
         dropdownIMEI();
 
         dropdownTelefono();
-
-        llenarComboBoxMarca();
-
-        llenarComboBoxModelo();
 
         llenarComboBoxTipoVehiculo();
 
@@ -179,8 +165,8 @@ public class RegistroVehiculo extends AppCompatActivity {
 
                     System.out.println("PROCESO SATISFACTORIO");
 
-                    String Plan = response.body();
-
+                    String Plan =  response.body();
+                    System.out.println(response.body());
                     System.out.println("PLAN  : " + Plan);
 
                     SharedPreferencesManager.setSomeStringValue(Constantes.PREF_PLAN, Plan);
@@ -586,14 +572,14 @@ public class RegistroVehiculo extends AppCompatActivity {
 
                     idTarea = Integer.parseInt(SharedPreferencesManager.getSomeStringValue(Constantes.PREF_ID_TAREA));
                     System.out.println("ID TAREA " + idTarea);
-                    System.out.println("ID MODELO: "+ idModelo + "  ID_MARCA: " + idMarca+" ID_CHIP: " + idChip+" ID_GPS: "+ idGps+
+                    System.out.println("MODELO: "+ desModelo + "  MARCA: " + desMarca +" ID_CHIP: " + idChip+" ID_GPS: "+ idGps+
                             "  ID TIPO " + idTipo+ "PLaca : " +  placaVehiculo  +  " NumCredito  " +
                             numCredito + "  FlagSutran : " + flagSutran +  "ID FLOTA: "+ idFlota);
 
                     RequestVehiculo vehiculo = new RequestVehiculo();
 
-                    vehiculo.setIdModelo(idModelo);
-                    vehiculo.setIdMarca(idMarca);
+                    //vehiculo.setIdModelo(idModelo);
+                    //vehiculo.setIdMarca(idMarca);
                     vehiculo.setIdChip(idChip);
                     vehiculo.setIdGps(idGps);
                     vehiculo.setIdTipo(idTipo);
@@ -777,14 +763,14 @@ public class RegistroVehiculo extends AppCompatActivity {
         btnEnviar = findViewById(R.id.buttonEnviar);
         btnSiguiente = findViewById(R.id.btnSiguiente);
         placaText = (TextView)findViewById(R.id.placaView);
+        modeloText = findViewById(R.id.modeloView);
+        marcaText = findViewById(R.id.marcaView);
         numCreditoText = findViewById(R.id.numCreditoView);
         spinnerSutran = findViewById(R.id.spinnerSutran);
         direccionText = findViewById(R.id.direccionView);
         bloqueText = findViewById(R.id.bloqueoView);
         ultimaTransText = findViewById(R.id.ultimaTransView);
         spinnerTipoVeh = findViewById(R.id.spinnerTipoVehiculo);
-        spinnerMarca = findViewById(R.id.spinnerMarca);
-        spinnerModelo = findViewById(R.id.spinnerModelo);
         imeiText = findViewById(R.id.imeiAutoComplete);
         modeloGps = findViewById(R.id.modelogpsView);
         telefonoText = findViewById(R.id.telefAutoComplete);
@@ -810,9 +796,16 @@ public class RegistroVehiculo extends AppCompatActivity {
 
     private void llenarCasillas() {
 
+
         placaVehiculo = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_PLACA);
-        
+        desMarca = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_DES_MARCA);
+        desModelo = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_DES_MODELO);
+
+        marcaText.setText(desMarca);
+        modeloText.setText(desModelo);
         placaText.setText(placaVehiculo);
+
+
 
 
         if(ListadoTareas.estado){
@@ -1014,268 +1007,6 @@ public class RegistroVehiculo extends AppCompatActivity {
 
 */
     }
-
-    private void borrarRegistrosLocales(){
-
-        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(RegistroVehiculo.this);
-
-        dataBaseHelper.deleteRows();
-
-    }
-
-    private void insertarModeloLocal(){
-
-        Call<List<ModeloVehiculo>> modeloList = ModeloClient.getModeloService().getModelo();
-        modeloList.enqueue(new Callback<List<ModeloVehiculo>>() {
-            @Override
-            public void onResponse(Call<List<ModeloVehiculo>> call, Response<List<ModeloVehiculo>> response) {
-
-                if(response.isSuccessful()){
-                    List<ModeloVehiculo> listaModelo = new ArrayList<>();
-                    listaModelo = response.body();
-                    System.out.println("INGRESO RESPONSE MODELO LOCAL");
-
-                    DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(RegistroVehiculo.this);
-                    ModeloVehiculo modelo = new ModeloVehiculo();
-                    boolean success =false;
-
-                    for(ModeloVehiculo model : listaModelo){
-
-                        modelo.setIdModelo(model.getIdModelo());
-                        modelo.setDesModelo(model.getDesModelo());
-                        modelo.setId_marca(model.getId_marca());
-
-                        success = dataBaseHelper.addModelo(modelo);
-                    }
-
-                    Toast.makeText(RegistroVehiculo.this, "SUCCESS : " + success, Toast.LENGTH_SHORT).show();
-
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ModeloVehiculo>> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    private void insertarMarcaLocal(){
-
-        Call<List<Marca>> marcaList = MarcaClient.getMarcaService().getMarca();
-        marcaList.enqueue(new Callback<List<Marca>>() {
-            @Override
-            public void onResponse(Call<List<Marca>> call, Response<List<Marca>> response) {
-
-                if (response.isSuccessful()) {
-                    List<Marca> listaMarca = new ArrayList<>();
-                    listaMarca =  response.body();
-
-
-                    DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(RegistroVehiculo.this);
-                    Marca marca = new Marca();
-                    boolean success  = false;
-
-                    if(!dataBaseHelper.validacionRowsMarca()){
-
-                        for(Marca m: listaMarca){
-
-                            marca.setDesMarca(m.getDesMarca());
-                            marca.setIdMarca(m.getIdMarca());
-                            System.out.println("DES MARCA: " + m.getDesMarca());
-
-                            success = dataBaseHelper.addMarca(marca);
-
-
-                        Toast.makeText(RegistroVehiculo.this, "Success " + success, Toast.LENGTH_SHORT).show();
-
-                    }
-                    }
-
-
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Marca>> call, Throwable t) {
-                Log.e("failure", t.getLocalizedMessage());
-            }
-        });
-
-
-
-    }
-
-    private void llenarComboBoxModelo(){
-
-
-        listaModelo.clear();
-
-        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(RegistroVehiculo.this);
-
-
-
-        List<ModeloVehiculo> tempList = new ArrayList<>();
-
-        tempList = dataBaseHelper.getModeloVehiculo(idMarca);
-
-        int incrementable = 0;
-
-        for(ModeloVehiculo m: tempList ){
-
-
-            listaModelo.add(m.getDesModelo());
-            mapModelo.put(m.getIdModelo(),m.getDesModelo());
-            System.out.println("MODELO DESCRIPCION : " + m.getDesModelo());
-
-            if(ListadoTareas.estado){
-                idModelo = Integer.parseInt(SharedPreferencesManager.getSomeStringValue(Constantes.PREF_ID_MODELO));
-                if(idModelo == m.getIdModelo()){
-
-                    position = incrementable;
-                    System.out.println("POSICION MODELO SELECT ES " + position);
-
-                }
-
-                incrementable++;
-
-            }
-
-        }
-
-
-        ArrayAdapter<ModeloVehiculo> dataAdapter;
-        dataAdapter = new ArrayAdapter(RegistroVehiculo.this, android.R.layout.simple_spinner_item, listaModelo);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerModelo.setAdapter(dataAdapter);
-
-        if(ListadoTareas.estado){
-            spinnerModelo.setSelection(position);
-        }
-
-
-        spinnerModelo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String desModelo = spinnerModelo.getSelectedItem().toString();
-                System.out.println("MODELO  SELECCIONADA : " + desModelo);
-
-
-                for(Map.Entry<Integer,String> map: mapModelo.entrySet()){
-
-                    if(map.getValue().equals(desModelo)){
-
-                        idModelo = map.getKey();
-                        System.out.println("ID DEL MODELO ES : " +idModelo);
-
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-
-    }
-
-    private void llenarComboBoxMarca(){
-
-
-
-
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(RegistroVehiculo.this);
-
-        List<Marca> tempList = new ArrayList<>();
-
-        tempList = dataBaseHelper.getMarca();
-
-        int incrementable = 0;
-
-        for(Marca m: tempList ){
-
-
-            listaMarca.add(m.getDesMarca());
-            mapMarca.put(m.getIdMarca(),m.getDesMarca());
-            System.out.println("MARCA : " + m.getDesMarca());
-
-            if(ListadoTareas.estado){
-                idMarca = Integer.parseInt(SharedPreferencesManager.getSomeStringValue(Constantes.PREF_ID_MARCA));
-                if(idMarca == m.getIdMarca()){
-
-                    position = incrementable;
-                    System.out.println("POSICION DEL SELECT ES " + position);
-
-                }
-
-                incrementable++;
-
-            }
-
-        }
-
-
-
-        ArrayAdapter<Marca> dataAdapter;
-        dataAdapter = new ArrayAdapter(RegistroVehiculo.this, android.R.layout.simple_spinner_item, listaMarca);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerMarca.setAdapter(dataAdapter);
-
-        if(ListadoTareas.estado){
-
-            spinnerMarca.setSelection(position);
-
-        }
-
-
-        spinnerMarca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String desMarca = spinnerMarca.getSelectedItem().toString();
-                System.out.println("MARCA SELECCIONADA : " + desMarca);
-
-                for(Map.Entry<Integer,String> map: mapMarca.entrySet()){
-
-                    if(map.getValue().equals(desMarca)){
-
-                        idMarca = map.getKey();
-                        System.out.println("ID DE LA MARCA ES : " +idMarca);
-
-                    }
-
-
-                }
-
-
-                llenarComboBoxModelo();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-
-
-    }
-
 
 
     private void getTelefono(){

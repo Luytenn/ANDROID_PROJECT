@@ -26,8 +26,8 @@ public class Constantes {
     public static final String PREF_ULT_TRANS = "PREF_ULT_TRANS";
     public static final String PREF_TELEFONO2 = "PREF_TELEFONO2";
     public static final String PREF_ID_CHIP = "PREF_ID_CHIP";
-    public static final String PREF_ID_MARCA = "PREF_ID_MARCA";
-    public static final String PREF_ID_MODELO = "PREF_ID_MODELO";
+    public static final String PREF_DES_MARCA = "PREF_DES_MARCA";
+    public static final String PREF_DES_MODELO = "PREF_DES_MODELO";
     public static final String PREF_ID_TIPO = "PREF_ID_TIPO";
     public static final String PREF_ID_FLOTA = "PREF_ID_FLOTA";
 

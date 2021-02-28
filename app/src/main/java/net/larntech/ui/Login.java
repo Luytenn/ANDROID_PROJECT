@@ -55,8 +55,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
 
         insertarTipoVehiculoLocal();
-        insertarMarcaLocal();
-        insertarModeloLocal();
 
 
         getSupportActionBar().hide();
@@ -116,7 +114,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         boolean tipo = dataBaseHelper.validacionRowsTipo();
         boolean modelo = dataBaseHelper.validacionRowsModelo();
 
-        if(marca!=false && tipo!=false && modelo!=false) {
+        if(tipo!=false) {
 
             String usuario = etUsuario.getText().toString();
             String password = etPassword.getText().toString();
@@ -193,160 +191,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
     }
 
-    private void insertarMarcaLocal(){
 
-        Call<List<Marca>> marcaList = MarcaClient.getMarcaService().getMarca();
-        marcaList.enqueue(new Callback<List<Marca>>() {
-            @Override
-            public void onResponse(Call<List<Marca>> call, Response<List<Marca>> response) {
-
-                if (response.isSuccessful()) {
-                    listaMarca =  response.body();
-
-
-                    DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(Login.this);
-                    Marca marca = new Marca();
-                    boolean success  = false;
-
-                    if(!dataBaseHelper.validacionRowsMarca()){
-                        for(Marca m: listaMarca){
-
-                            marca.setDesMarca(m.getDesMarca());
-                            marca.setIdMarca(m.getIdMarca());
-                            System.out.println("DES MARCA: " + m.getDesMarca());
-
-                            success = dataBaseHelper.addMarca(marca);
-
-                        }
-
-                        //Toast.makeText(Login.this, "Success " + success, Toast.LENGTH_SHORT).show();
-
-                    } /*else{
-
-                        int lastRow = 0;
-
-                        Marca m2 = new Marca();
-                        List<Marca> list = new ArrayList<>();
-                        list = dataBaseHelper.getMarcaNoDesc();
-
-                        lastRow = list.get(list.size()-1).getIdMarca();
-                        boolean success2 = false;
-                        for(int i=0; i<listaMarca.size(); i++){
-
-
-                            if(lastRow<=listaMarca.get(i).getIdMarca()){
-
-                                m2.setIdMarca(listaMarca.get(i).getIdMarca());
-                                m2.setDesMarca(listaMarca.get(i).getDesMarca());
-
-                                success2 = dataBaseHelper.addMarca(m2);
-
-                            }
-
-
-
-
-                        }
-
-
-
-                    }*/
-
-                }else{
-                    Toast.makeText(Login.this, "Vuelva a Ingresar Nuevamente", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Marca>> call, Throwable t) {
-                Log.e("failure", t.getLocalizedMessage());
-            }
-        });
-
-
-
-    }
-
-
-    private void insertarModeloLocal(){
-
-        Call<List<ModeloVehiculo>> modeloList = ModeloClient.getModeloService().getModelo();
-        modeloList.enqueue(new Callback<List<ModeloVehiculo>>() {
-            @Override
-            public void onResponse(Call<List<ModeloVehiculo>> call, Response<List<ModeloVehiculo>> response) {
-
-                if(response.isSuccessful()) {
-                    listaModelo = response.body();
-                    System.out.println("INGRESO RESPONSE MODELO LOCAL");
-
-                    DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(Login.this);
-                    ModeloVehiculo modelo = new ModeloVehiculo();
-                    boolean success = false;
-
-                    if(!dataBaseHelper.validacionRowsModelo()){
-
-                        for (ModeloVehiculo model : listaModelo) {
-
-                            modelo.setIdModelo(model.getIdModelo());
-                            modelo.setDesModelo(model.getDesModelo());
-                            modelo.setId_marca(model.getId_marca());
-
-                            success = dataBaseHelper.addModelo(modelo);
-                        }
-
-                        //Toast.makeText(Login.this, "SUCCESS : " + success, Toast.LENGTH_SHORT).show();
-
-
-                    } /*else{
-
-                        int lastRow = 0;
-
-                        ModeloVehiculo modeloV = new ModeloVehiculo();
-                        List<ModeloVehiculo> list = new ArrayList<>();
-                        list = dataBaseHelper.getModelos();
-
-                        lastRow = list.get(list.size()-1).getIdModelo();
-                        boolean success2 = false;
-                        for(int i=0; i<listaModelo.size(); i++){
-
-
-                            if(lastRow<=listaModelo.get(i).getIdModelo()){
-
-                                modeloV.setIdModelo(listaModelo.get(i).getIdModelo());
-                                modeloV.setId_marca(listaModelo.get(i).getId_marca());
-                                modeloV.setDesModelo(listaModelo.get(i).getDesModelo());
-
-                                success2 = dataBaseHelper.addModelo(modeloV);
-
-                            }
-
-
-
-
-                        }
-
-
-
-                    }*/
-
-
-                   }else{
-
-                        Toast.makeText(Login.this, "Vuelva a Ingresar Nuevamente", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                }
-
-
-            @Override
-            public void onFailure(Call<List<ModeloVehiculo>> call, Throwable t) {
-
-            }
-        });
-
-    }
 
     private void insertarTipoVehiculoLocal(){
 
@@ -392,15 +237,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-
-    }
-
-
-    private void borrarRegistrosLocales(){
-
-        DataBaseHelper dataBaseHelper = DataBaseHelper.getInstance(Login.this);
-
-        dataBaseHelper.deleteRows();
 
     }
 
